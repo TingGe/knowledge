@@ -1,0 +1,7 @@
+#tabs li, #tabsContent div {
+	
+}
+.active {
+	display: block;
+	border: 1px #f00 solid;
+}

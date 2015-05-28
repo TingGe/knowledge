@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Canvas图片</title>
+	<!--[if IE]><script type="text/javascript" src="j/excanvas.js"></script><![endif]-->
+	<!-- 在ie7、8中验证excanvas.js失败 -->
+</head>
+
+<body>
+	<canvas id="e" width="770" height="1765"></canvas>
+
+	<script>
+		window.onload = function() {
+			var e_canvas = document.getElementById("e");
+			var context = e_canvas.getContext("2d");
+
+			var people = new Image();
+			people.src = "images/people.png";
+			people.onload = function() {
+				for (var x = 0, y = 0; x < 770 && y < 1765; x += 154, y += 253) {
+					context.drawImage(people, x, y, 154, 253);
+				}
+			};
+		};
+	</script>
+</body>
+
+</html>

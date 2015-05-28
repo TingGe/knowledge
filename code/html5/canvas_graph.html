@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Canvas坐标图</title>
+</head>
+
+<body>
+	<canvas id="c" width="500" height="375"></canvas>
+	<script>
+		var c_canvas = document.getElementById("c");
+		var content = c_canvas.getContext("2d");
+
+		 //路径(铅笔)
+		for (var x = 0.5; x < 500; x += 10) {
+			content.moveTo(x, 0);
+			content.lineTo(x, 375);
+		}
+		for (var y = 0.5; y < 375; y += 10) {
+			content.moveTo(0, y);
+			content.lineTo(500, y);
+		}
+
+		 //路径(画笔)
+		content.strokeStyle = "#eee";
+		content.stroke();
+
+		content.beginPath();
+		content.moveTo(0, 40);
+		content.lineTo(240, 40);
+		content.moveTo(260, 40);
+		content.lineTo(500, 40);
+		content.moveTo(495, 35);
+		content.lineTo(500, 40);
+		content.lineTo(495, 45);
+
+		content.moveTo(60, 0);
+		content.lineTo(60, 153);
+		content.moveTo(60, 173);
+		content.lineTo(60, 375);
+		content.moveTo(55, 370);
+		content.lineTo(60, 375);
+		content.lineTo(65, 370);
+
+		content.strokeStyle = "#000";
+		content.stroke();
+
+		 //文本
+		content.font = "bold 12px sans-serif";
+		content.fillText("x", 248, 43);
+		content.fillText("y", 58, 165);
+
+		content.textBaseline = "top";
+		content.fillText("(0, 0)", 8, 5);
+		
+		content.textAlign = "right";
+		content.textBaseline = "bottom";
+		content.fillText("(500, 375)", 492, 370);
+		
+		//对角点
+		content.fillRect(0, 0, 3, 3);
+		content.fillRect(497, 372, 3, 3);
+	</script>
+</body>
+
+</html>

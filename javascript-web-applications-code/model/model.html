@@ -1,0 +1,81 @@
+﻿
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Model示例</title>
+	<script src="../lib/jquery-1.11.0.js" charset="utf-8"></script>
+	<script src="model.js" charset="utf-8"></script>
+</head>
+
+<body>
+	<p>全局统一标识（Globally Unique Identifier, 简称GUID）生成器。从技术角度讲，出于API的原因，JavaScript无法友好正式地生成128位的GUID，它只能生成伪随机数。生成真正随机的GUID是个众所周知的难题，操作系统使用MAC地址、鼠标位置、BIOS的校验和、测量电信号的噪声或者监测放射性衰变来计算GUID，甚至用上了熔岩灯。虽然JavaScript中内置的Math.random()方法尽管产生的是伪随机数，但也足够用了。</p>
+	<script>
+		var Asset = Model.create();
+		var User = Model.create();
+		
+		var user = User.init();
+		
+		// 添加对象属性
+		/*Model.extend({
+			find: function(){}
+		});*/
+		
+		// 添加实例属性
+		Model.include({
+			init: function(atts){/**/},
+			load: function(attributes){/**/}
+		});
+		
+		var asset = Asset.init();
+		asset.id = 1;
+		asset.name = "same, same";
+		asset.save();
+		console.log(asset.id);
+				
+		var asset2 = Asset.init();
+		asset2.name = "but different";
+		//asset2.id = 2;
+		asset2.save();
+		//assertEqual(Asset.find(1).name, "same, same");
+		console.log(Asset.find(1).name);	
+		asset2.destory();
+		
+		Asset.extend({
+			find: function(id){
+				var record = this.records[id];
+				if(!record){
+					throw("Unkonwn record");
+				}
+				return record.dup();
+			}
+		});
+		
+		Asset.include({
+			create: function(){
+				this.newRecord = false;
+				this.parent.records[this.id] = this.dup();
+			},
+			
+			update: function(){
+				this.parent.records[this.id] = this.dup();
+			},
+			
+			dup: function(){
+				return jQuery.extend(true, {}, this);
+			}
+		});
+		
+		jQuery.getJSON("/assets", function(result){
+			Asset.populate(result);
+		});
+		
+		Asset.extend(Model.LocalStorage);
+		
+		// 将新纪录提交给服务器
+		Asset.init({name: "json.txt"}).createRemote("/assets");
+	</script>
+</body>
+
+</html>

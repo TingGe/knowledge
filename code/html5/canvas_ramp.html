@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Canvas颜色渐变</title>
+</head>
+
+<body>
+	从左到右的线性渐变
+	<canvas id="d_horizontal" width="300" height="225"></canvas>
+
+	<script>
+		var d_canvas = document.getElementById("d_horizontal");
+		var context = d_canvas.getContext("2d");
+
+		var my_gradient = context.createLinearGradient(0, 0, 300, 0);
+		my_gradient.addColorStop(0, "black");
+		my_gradient.addColorStop(1, "white");
+
+		context.fillStyle = my_gradient;
+		context.fillRect(0, 0, 300, 225);
+	</script>
+
+	从上到下的线性渐变
+	<canvas id="d_vertical" width="300" height="225"></canvas>
+	<script>
+		var d_canvas = document.getElementById("d_vertical");
+		var context = d_canvas.getContext("2d");
+
+		var my_gradient = context.createLinearGradient(0, 0, 0, 225);
+		my_gradient.addColorStop(0, "black");
+		my_gradient.addColorStop(1, "white");
+
+		context.fillStyle = my_gradient;
+		context.fillRect(0, 0, 300, 225);
+	</script>
+	
+	对角线的线性渐变
+	<canvas id="d_diagonal" width="300" height="225"></canvas>
+	<script>
+		var d_canvas = document.getElementById("d_diagonal");
+		var context = d_canvas.getContext("2d");
+
+		var my_gradient = context.createLinearGradient(0, 0, 300, 225);
+		my_gradient.addColorStop(0, "black");
+		my_gradient.addColorStop(1, "white");
+
+		context.fillStyle = my_gradient;
+		context.fillRect(0, 0, 300, 225);
+	</script>
+</body>
+
+</html>

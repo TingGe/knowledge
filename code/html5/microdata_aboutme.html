@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="robots" content="noindex">
+	<title>Microdata</title>
+	<!--[if lt IE 9]>
+		<script src="http://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv-printshiv.js"></script>
+	<![endif]-->
+	<link rel="stylesheet" href="http://diveintohtml5.info/examples/style-html5.css">
+	<link rel="alternate" type="application/atom+xml" title="My Weblog feed" href="http://diveintohtml5.info/feed/">
+	<link rel="search" type="application/opensearchdescription+xml" title="My Weblog search" href="http://diveintohtml5.info/examples/opensearch.xml">
+</head>
+
+<body>
+
+	<header>
+
+		<hgroup>
+			<h1>Ting Ge</h1>
+			<h2>You've been saying for the longest time that the time has come</h2>
+		</hgroup>
+
+		<nav>
+			<ul>
+				<li>
+					<a href="#">首页</a>
+				</li>
+				<li>
+					<a href="https://github.com/tingge">GitHub</a>
+				</li>
+				<li>
+					<a href="http://blog.sina.com.cn/tinggebar">新浪博客</a>
+				</li>
+				<li>
+					<a href="#">关于我</a>
+				</li>
+			</ul>
+		</nav>
+
+	</header>
+	<section itemscope itemtype="http://data-vocabulary.org/Person">
+		<img itemprop="photo" class="me" src="http://tp1.sinaimg.cn/1667946592/180/22842295807/1" alt="[Mark Pilgrim, circa 2000]">
+
+		<h1>联系信息</h1>
+		<dl>
+			<dt>名称</dt>
+			<dd itemprop="name">听歌</dd>
+
+			<dt>职位</dt>
+			<dd>
+				<span itemprop="title">JS工程师</span>for
+				<span itemprop="affiliation">IZP, Inc.</span>
+			</dd>
+
+			<dt>地址</dt>
+			<dd itemprop="address" itemscope itemtype="http://data-vocabulary.org/Address">
+				<span itemprop="country-name">中国</span>
+				<br>
+				<span itemprop="region">北京</span>，
+				<span itemprop="locality">朝阳</span>
+				<span itemprop="postal-code">100102</span>
+				<br>
+				<span itemprop="street-address">望京东路8号</span>
+			</dd>
+		</dl>
+		<h1>我的印记</h1>
+		<ul>
+			<li>
+				<a href="http://weibo.com/u/1667946592" itemprop="url">微博</a>
+			</li>
+			<li>
+				<a href="http://blog.sina.com.cn/tinggebar/" itemprop="url">新浪博客</a>
+			</li>
+			<li>
+				<a href="http://505253293.blog.163.com/" itemprop="url">网易博客</a>
+			</li>
+			<li>
+				<a href="mailto://505253293@163.com" itemprop="url">邮箱</a>
+			</li>
+		</ul>
+	</section>
+
+	<section>
+		<h1>微数据的属性值来自何处</h1>
+		<table>
+			<tbody>
+				<tr>
+					<th>元素</th>
+					<td>值</td>
+				</tr>
+				<tr>
+					<th>meta</th>
+					<td>content属性</td>
+				</tr>
+				<tr>
+					<th>audio</th>
+					<td>
+						src属性
+					</td>
+				</tr>
+				<tr>
+					<th>embed</th>
+					<td>
+						src属性
+					</td>
+				</tr>
+				<tr>
+					<th>iframe</th>
+					<td>
+						src属性
+					</td>
+				</tr>
+				<tr>
+					<th>img</th>
+					<td>
+						src属性
+					</td>
+				</tr>
+				<tr>
+					<th>source</th>
+					<td>
+						src属性
+					</td>
+				</tr>
+				<tr>
+					<th>video</th>
+					<td>
+						src属性
+					</td>
+				</tr>
+				<tr>
+					<th>a</th>
+					<td>
+						href属性
+					</td>
+				</tr>
+				<tr>
+					<th>area</th>
+					<td>
+						href属性
+					</td>
+				</tr>
+				<tr>
+					<th>link</th>
+					<td>
+						href属性
+					</td>
+				</tr>
+				<tr>
+					<th>object</th>
+					<td>
+						data属性
+					</td>
+				</tr>
+				<tr>
+					<th>time</th>
+					<td>datetime属性</td>
+				</tr>
+				<tr>
+					<th>所有其他元素</th>
+					<td>
+						文本内容</td>
+				</tr>
+			</tbody>
+		</table>
+	</section>
+
+</body>
+
+</html>

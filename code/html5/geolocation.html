@@ -1,0 +1,75 @@
+﻿<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Geolocation</title>
+</head>
+
+<body>
+	<ol>
+		<li>测试结果是：ie精确度为1000；chrome精确度是18000</li>
+		<li>不同浏览器使用watchPositon()方法时，时间间隔不定。建议采用setTimeout控制</li>
+		<li>IE6、7、8浏览器，Blackberry，Palm OS中可使用
+			<a href="https://github.com/estebanav/javascript-mobile-desktop-geolocation">javascript-mobile-desktop-geolocation</a>
+		</li>
+	</ol>
+
+	<ul id="map"></ul>
+	<script>
+		var map = document.getElementById("map");
+
+		/**
+		 * 成功回调
+		 */
+		var showMap = function(position) {
+			map.innerHTML =
+				'<li>纬度：' +
+				position.coords.latitude +
+				'</li><li>经度：' +
+				position.coords.longitude +
+				'</li><li>精确度：' +
+				position.coords.accuracy +
+				'</li><li>采集日期：' +
+				new Date(position.timestamp).toLocaleDateString() +
+				'</li><li>采集时间：' +
+				new Date(position.timestamp).toLocaleTimeString() +
+				'</li>';
+
+		};
+
+		/**
+		 * 失败回调
+		 */
+		var handleError = function(err) {
+			switch (err.code) {
+				case 1:
+					map.innerHTML = '用户拒绝共享位置信息';
+					break;
+				case 2:
+					map.innerHTML = '网络不可用或无法连接到获取位置信息的卫星';
+					break;
+				case 3:
+					map.innerHTML = '网络可用，但花费了太长时间在计算用户的位置上';
+					break;
+				default:
+					map.innerHTML = '其他未知错误';
+			}
+		};
+
+		if (navigator.geolocation) {
+			map.innerHTML = '加载中';
+			//一次性获取位置的请求
+			navigator.geolocation.getCurrentPosition(showMap, handleError, {
+				enableHighAccuracy: false, // 是否启用高精确度模
+				timeout: 10, //在指定的时间内获取位置信息
+				maximumAge: 10, //浏览器重新获取位置信息的时间间隔
+				frequency: 1000 //每隔3秒钟检索第一次位置信息
+			});
+		} else {
+			map.innerHTML = '您的浏览器不支持地理位置，推荐使用javascript-mobile-desktop-geolocation';
+		}
+	</script>
+</body>
+
+</html>

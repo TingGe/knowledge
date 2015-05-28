@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>发布/订阅(Pub/Sub)消息模式示例</title>
+	<script src="PubSub.js"></script>
+</head>
+
+<body>
+	<script>
+		//使用方法
+		PubSub.subscribe("tingge", function(){
+			alert("tingge");
+		});
+		
+		PubSub.publish("tingge");
+	</script>
+	<section>
+		<h1>更多</h1>
+		<p>
+			<a href="http://benalman.com">Ben Alman</a>写的
+			<a href="https://gist.github.com/isao/799721">一个jQuery发布/订阅库</a>
+		</p>
+	</section>
+</body>
+
+</html>
