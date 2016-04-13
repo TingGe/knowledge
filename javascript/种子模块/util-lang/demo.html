@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>类型的判定</title>
+</head>
+
+<body>
+  <script src="./util-lang.js" charset="utf-8"></script>
+  <script type="text/javascript">
+    var num = 1,
+      str = "string",
+      arr = [],
+      boolean = false,
+      obj = {},
+      fn = function() {};
+
+    console.log("obj: " + isObject(obj));
+    console.log("str: " + isString(str));
+    console.log("arr: " + isArray(arr));
+    console.log("fn: " + isFunction(fn));
+    console.log("num: " + isNumber(num));
+    console.log("undefined: " + isUndefined(undefined));
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>判断页面最早加载后执行</title>
+</head>
+<body>
+  <script src="./domready.js" charset="utf-8"></script>
+  <script type="text/javascript">
+    var callback = function(){
+      console.log(arguments);
+    };
+    domReady(callback);
+  </script>
+</body>
+</html>

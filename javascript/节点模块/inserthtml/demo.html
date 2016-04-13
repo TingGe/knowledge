@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		* {
+			margin: 0;
+			padding: 0;
+		}
+
+		ul,
+		li {
+			margin: 20px;
+		}
+		
+		.color_1 {
+			color: #F7941D;
+			border: 1px solid #F7941D;
+		}
+
+		.color_2 {
+			color: #f00;
+			border: 1px solid #f00;
+		}
+
+		.color_3 {
+			color: #01FE34;
+			border: 1px solid #01FE34;
+		}
+
+		.color_4 {
+			color: #F49AC1;
+			border: 1px solid #F49AC1;
+		}
+
+		.color_5 {
+			color: #00AEEF;
+			border: 1px solid #00AEEF;
+		}
+	</style>
+</head>
+
+<body>
+	<button onclick="btnHandler();">insertAdjacentHTML</button>
+	<ul class="color_1" id="abc">
+		abcd
+		<li>efg</li>hijklmn
+	</ul>
+
+	<script type="text/javascript" src="inserthtml.js"></script>
+	<script type="text/javascript">
+		function btnHandler() {
+			var elem = document.getElementById('abc').getElementsByTagName("li")[0];
+
+			Ext.insertHtml('beforeBegin', elem, '<dd class="color_2">上一个兄弟节点previousSibling</dd>');
+			Ext.insertHtml('beforeEnd', elem, '<dd class="color_3">最后一个节点lastChild</dd>');
+			Ext.insertHtml('afterBegin', elem, '<dd class="color_4">第一个节点firstChild</dd>');
+			Ext.insertHtml('afterEnd', elem, '<dd class="color_5">下一个兄弟节点nextSibling</dd>');
+		}
+	</script>
+</body>
+
+</html>

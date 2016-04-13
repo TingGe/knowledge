@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<title>Video 示例</title>
+</head>
+<body>
+	<video controls="controls" autoplay="autoplay" poster="./res/small.jpg" width="560" height="320">
+		<source src="./res/small.mp4" type="video/mp4" />
+		<source src="./res/small.webm" type="video/webm" />
+		<source src="./res/small.ogv" type="video/ogg" />
+		<object type="application/x-shockwave-flash" data="./res/flashfox.swf" width="560" height="320" style="position:relative;">
+			<param name="movie" value="./res/flashfox.swf" />
+			<param name="allowFullScreen" value="true" />
+			<param name="flashVars" value="autoplay=true&amp;controls=true&amp;fullScreenEnabled=true&amp;loop=false&amp;poster=./res/small.jpg&amp;src=small.mp4" />
+			<embed src="./res/flashfox.swf" width="560" height="320" style="position:relative;" flashVars="autoplay=true&amp;controls=true&amp;fullScreenEnabled=true&amp;loop=false&amp;poster=./res/small.jpg&amp;src=small.mp4" allowFullScreen="true" wmode="transparent" type="application/x-shockwave-flash" pluginspage="http://www.adobe.com/go/getflashplayer_en" />
+			<img alt="small" src="./res/small.jpg" style="position:absolute;left:0;" width="560" height="320" title="Video playback is not supported by your browser" />
+		</object>
+	</video>
+
+	<p>另外，通过判断浏览器对video标签支持程度的方案。<a target="_blank" href="http://www.videojs.com/">Zencoder Video js</a></p>
+</body>
+
+</html>
