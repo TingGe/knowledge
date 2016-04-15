@@ -1,23 +1,30 @@
-# 节点模块
+# 语言模块
 
-## 节点的创建
+## 字符串编码与解码
 
-## 节点的插入
+见目录 mod_endecode.js
 
-见目录 inserthtml.js
+## 数组的扩展与修复
 
-## 节点的复制
+见目录 util-array.js
 
-## 节点的移除
+## 数值的扩展与修复
 
-## innerHTML、innerText与outerHTML的处理
+## 函数的扩展与修复
 
-## iframe元素
+见目录 util-function.js
 
-## video/object标签
+## 日期的扩展与修复
 
-见目录 video
+## 对象的扩展与修复
+
+见目录 util-object.js
+
+## JSON的修复
+
+[JSON-js](https://github.com/douglascrockford/JSON-js)
 
 ## 附录
 
-- ​
+- [字符串编解码工具（Unicode、UTF8、Base64、MD5等）](https://github.com/zxlie/FeHelper)
+- [介绍 JSON](http://www.json.org/json-zh.html)
