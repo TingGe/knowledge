@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>延迟加载</title>
+</head>
+
+<body>
+   <!-- 页面初始化和绑定UI元素的事件处理函数必须的 -->
+  <script src="all_20100426.js"></script>
+  <script>
+    window.onload = function() {
+      // 只在用户交互或者其它条件下才会用到的
+      var script = document.createElement("script");
+      script.src = "all_lazy_20100426.js";
+      document.documentElement.firstChild.appendChild(script);
+    };
+  </script>
+
+</body>
+
+</html>
