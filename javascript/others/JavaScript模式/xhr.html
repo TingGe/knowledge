@@ -1,0 +1,45 @@
+<!-- DOM和浏览器中的模式：远程脚本编程——XMLHttpRequest -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>XMLHttpRequest</title>
+</head>
+
+<body>
+  <button id="go">Fetch me a sonnet!</button>
+  <script type="text/javascript">
+    document.getElementById('go').onclick = function() {
+      var i, xhr, activeXids = [
+        'MSXML2.XMLHTTP.3.0',
+        'MSXML2.XMLHTTP',
+        'Microsoft.XMLHTTP'
+      ];
+      if (typeof XMLHttpRequest === "function") { // native XHR
+        xhr = new XMLHttpRequest();
+      } else { // IE before 7
+        for (i = 0; i < activeXids.length; i += 1) {
+          try {
+            xhr = new ActiveXObject(activeXids[i]);
+            break;
+          } catch (e) {}
+        }
+      }
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState !== 4) {
+          return false;
+        }
+        if (xhr.status !== 200) {
+          alert("Error, status code: " + xhr.status);
+          return false;
+        }
+        document.body.innerHTML += "<pre>" + xhr.responseText + "<\/pre>";
+      };
+      xhr.open("GET", "page.html", true);
+      xhr.send("");
+    };
+  </script>
+</body>
+
+</html>

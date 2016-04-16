@@ -1,0 +1,113 @@
+<!-- DOM和浏览器中的模式：远程脚本编程——JSONP -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>JSONP</title>
+  <style media="screen">
+    td {
+      width: 50px;
+      height: 50px;
+      font-size: 50px;
+      font-family: monospace;
+      border: 1px solid lightGrey;
+      text-align: center;
+      color: red;
+    }
+
+    .server {
+      color: blue;
+    }
+
+    body {
+      font-family: Helvetica;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Tic-tac-toe: <br>server "X" vs. client "O"</h1>
+  <button id="new">New game</button>
+  <button id="server">Server play</button>
+  <table>
+    <tr>
+      <td id="cell-1">&nbsp;</td>
+      <td id="cell-2">&nbsp;</td>
+      <td id="cell-3">&nbsp;</td>
+    </tr>
+    <tr>
+      <td id="cell-4">&nbsp;</td>
+      <td id="cell-5">&nbsp;</td>
+      <td id="cell-6">&nbsp;</td>
+    </tr>
+    <tr>
+      <td id="cell-7">&nbsp;</td>
+      <td id="cell-8">&nbsp;</td>
+      <td id="cell-9">&nbsp;</td>
+    </tr>
+  </table>
+
+  <script>
+    var ttt = {
+      // cells played so far
+      played: [],
+      // shorthand
+      get: function(id) {
+        return document.getElementById(id);
+      },
+      // handle clicks
+      setup: function() {
+        this.get('new').onclick = this.newGame;
+        this.get('server').onclick = this.remoteRequest;
+      },
+      // clean the board
+      newGame: function() {
+        var tds = document.getElementsByTagName("td"),
+          max = tds.length,
+          i;
+        for (i = 0; i < max; i += 1) {
+          tds[i].innerHTML = "&nbsp;";
+        }
+        ttt.played = [];
+      },
+      // make a request
+      remoteRequest: function() {
+        var script = document.createElement("script");
+        script.src = "server.php?callback=ttt.serverPlay&played=" + ttt.played.join(',');
+        document.body.appendChild(script);
+      },
+      // callback, server's turn to play
+      serverPlay: function(data) {
+        if (data.error) {
+          alert(data.error);
+          return;
+        }
+        data = parseInt(data, 10);
+        this.played.push(data);
+        this.get('cell-' + data).innerHTML = '<span class="server">X<\/span>';
+        setTimeout(function() {
+          ttt.clientPlay();
+        }, 300); // as if thinking hard
+      },
+      // client's turn to play
+      clientPlay: function() {
+        var data = 5;
+        if (this.played.length === 9) {
+          alert("Game over");
+          return;
+        }
+        // keep coming up with random numbers 1-9
+        // until one not taken cell is found
+        while (this.get('cell-' + data).innerHTML !== "&nbsp;") {
+          data = Math.ceil(Math.random() * 9);
+        }
+        this.get('cell-' + data).innerHTML = 'O';
+        this.played.push(data);
+      }
+    };
+    ttt.setup();
+  </script>
+</body>
+
+</html>
