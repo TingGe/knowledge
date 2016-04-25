@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="input">
+    <input name="intfx" value="" id="intfx" type="text">请输入阈值
+    <input name="indesc" value="3" id="indesc" type="text">请输入标引深度
+    <br>
+    <span class="txt">输入后请点击任何一篇标题获取结果</span>
+  </div>
+  <div id="drop" style="display: none;"></div>
+  内容：
+  <textarea name="keywords" cols="100" rows="10" id="keywords">美国各界中国人士强烈批评美限制中国纺织品进口中国连日来，美国各界许多有影响的人士纷纷对布什政府这种为了竞选需要置国家长远利益于不顾的做法提出批评。美国纺织品和服装进口商协会负责人劳拉·琼斯说，限制中国纺织品的进口丝毫无助于美国就业机会的增加，惟一的结果是美国扩大从其它国家的进口。美国前财政部长、花旗银行执行委员会主席鲁宾称，政府的这种贸易保护主义措施十分有害。美国联邦储备委员会主席格林斯潘则认为，政府的措施不仅无助、而且有害于美国经济和世界经济，他还敦促人们警惕贸易保护主义抬头。 　　华尔街著名经济学家、摩根士丹利首席经济学家斯蒂芬·罗奇在接受记者采访时明确指出，美国政府的这一措施是错误的，无异于向美国消费者额外征税。他同时表示，美中间的贸易争端应当通过协商机制来解决。
+    　　此间分析家指出，从中国进口的上述纺织品并不像美国某些人所说的那样正在“挤占”美国本地制造商的市场份额，原因是美国大部分制造商多年前就已经将这些产品的生产过程外包，采购商也不再在本地采购同类产品。此外，中国出口到美国市场的纺织品中，很大一部分是美国本地服装企业在中国生产的返销产品，中方除了赚取一小部分加工费用外，绝大部分利润都流入了美国人的腰包。 　　中美两国贸易已经形成了高度相互依赖的格局。例如，中国已成为美国棉花的主要进口国之一，美国农业部曾估计中国今年从美国进口的原棉会达到创记录的７００万包（每包合２１８公斤）。但布什政府的限制措施一出台，纽约商品交易所棉花期货价格大幅下跌。这对美国棉农和棉花经销商们显然不是一个好消息。因此，美国政府限制从中国的进口，也是限制美国企业的发展空间，损害的不仅是中国出口企业的利益，也是美国企业和消费者的利益。
+  </textarea>
+  <input type="button" onclick="lastIndexDemo();" value="提取关键词" />
+  <br /> TAGS：
+  <input name="tags" type="text" id="tags" style="width:300px;" />
+  <br />
+  <br />
+  <div id="result">
+    您所选择的题目是
+    <br><span id="outtit">美国各界人士强烈批评美限制中国纺织品进口</span>
+    <br> 此文章包含关键词
+    <br><span id="outkey">进口,纺织品,中国,限制,批评</span>
+    <br> 以上关键词对应权重为
+    <br><span id="outtfx">5.991,2.996,0.693,2.996,2.996</span>
+    <br> 此文章包含停用词
+    <br><span id="outstop">强烈,人士</span>
+    <br> 您的标引阈值为
+    <br><span id="outval">2</span>
+    <br> 关键词中符合并可作为标引词的有
+    <br><span id="outword">进口,纺织品,限制,批评</span>
+    <br> 您的标引深度为
+    <br><span id="outdeep">3</span>
+    <br> 最后确定的标引词为
+    <br><span id="outkeyword">进口,纺织品,限制</span>
+    <br>
+  </div>
+  <script>
+    var keylis = new Array("贸易", "制裁", "改造", "中国", "经济", "中国经济", "拯救", "美国", "美国经济", "整顿", "银行业", "银行", "速度", "温家宝", "美中", "逆差", "贸易逆差", "结构性", "转移性", "机电", "进出口", "商会", "彩电", "倾销", "税率", "交涉", "东北", "亚洲", "亚洲经济", "论坛", "增长", "失业率", "失业", "回落", "批评",
+      "限制", "纺织品", "进口", "加拿大", "统计", "移民", "收入", "差异", "中央银行", "中央", "商业银行", "政策", "措施", "经济发展", "发展", "日本", "日本经济", "复苏", "决定", "锻铸", "铁管", "管件", "征收", "反倾销", "垄断", "倾销税", "联合国", "联合", "实施", "伊拉克", "石油", "食品", "计划", "发展中国家", "发达国家", "国家", "家电",
+      "电信", "产业", "电子", "信息", "产销", "俄罗斯", "检察官", "检察", "首富", "犯罪", "调查", "结束", "欧盟", "争端", "投资", "受挫", "改革", "委员会", "委员", "实行", "临时", "价格", "干预", "施行", "美联储", "警告", "通货膨胀", "膨胀", "下滑", "衰退", "季度", "扬言", "演示简单", "后台");
+    var keydrop = "";
+
+    function delHtmlTag(str) {
+      return str.replace(/<[^>]+>/g, ""); //去掉所有的html标记
+    }
+
+    function lastIndexDemo(a) {
+      var str = delHtmlTag(document.getElementById("keywords").value); //获取字符串
+      var keys = new Array; //词表存储序列
+      var titles = new Array;
+      var key = new Array; //关键词对象存储序列
+      var gotkey = new Array(); //关键词对象
+      var name = new Array(); //关键词name
+      var address = new Array(); //关键词在词表中位置
+      var times = new Array(); //关键词在本篇目中的出现次数
+      var tfx = new Array(); //关键词tfx值
+      var stopkey = new Array(); //关键词是否为停用词
+      var desc = new Array(); //关键词排名
+      var strkey; // 声明变量预存关键字
+      var strl = str.length; //获取字符串长度
+      getkeywords(keys, titles); //初始化关键词表和标题序列
+      getkey(str, strkey, strl, keys, key, name, address, stopkey); //获取关键词，词表位置，是否停用
+      timesn(times, address); //获取n（出现多少次）
+      gettfx(times, tfx);
+      toobject(key, address, times, tfx, stopkey, name);
+      outresult(key, address, times, tfx, stopkey, name, str);
+
+    }
+
+    function getkeywords(keys, titles) {
+      var titl = 1;
+      var keyl = keylis.length;
+      var keyd = keydrop.length;
+      for (i = 0; i < keyl; i++) {
+        keys[i] = keylis[i];
+      }
+      for (i = 0; i < keyd; i++) {
+        keys[i + keyl] = keydrop[i].childNodes[0].nodeValue;
+      }
+      for (i = 0; i < titl; i++) {
+        titles[i] = document.getElementById("keywords").value;
+      }
+
+
+    }
+
+    function timesn(times, address) {
+      var k = 0;
+      for (i = 0; i < address.length; i++) {
+        for (j = 0; j < address.length; j++) {
+          if (address[i] == address[j]) {
+            k = k + 1;
+          }
+        }
+        times.push(k);
+        k = 0;
+      }
+    }
+
+    function gettfx(times, tfx) {
+      var k = Math.log(10);
+      var l;
+      var j;
+      var m;
+      var n;
+      for (i = 0; i < times.length; i++) {
+        l = times[i] / 1;
+        j = Math.log(l);
+        n = times[i] * j;
+        tfx.push(n.toFixed(3));
+      }
+    }
+
+    function toobject(key, address, times, tfx, stopkey, name) {
+      var gotdkey = new Array;
+      key["name"] = name;
+      key["address"] = address;
+      key["tfx"] = tfx;
+      key["stopkey"] = stopkey;
+      key["times"] = times;
+
+    }
+
+    function getkey(str, strkey, strl, keys, key, name, address, stopkey) {
+      for (k = strl; k > 0; k--) { //控制循环次数
+
+        label: for (j = 6; j > 0; j--) //通过最大关键字长度控制循环
+          {
+            var strkey = str.substr(k - j, j);
+
+            //确定预检索字符串 strl-j 是位置 j是长度
+            for (i = 0; i < keys.length; i++) //通过关键字字库的数量确定循环次数
+            {
+              if (keys[i] == strkey) { //如果现有关键字与字库匹配
+                name.push(strkey);
+                address.push(i);
+                if (i > keylis.length) {
+                  stopkey.push(false);
+                } else {
+                  stopkey.push(true);
+                }
+                k -= j;
+                k++;
+                break label;
+              }
+
+            }
+          }
+      }
+    }
+
+    function outresult(key, address, times, tfx, stopkey, name, str) {
+      var outtit = document.getElementById("outtit");
+      var outkey = document.getElementById("outkey");
+      var outtfx = document.getElementById("outtfx");
+      var outstop = document.getElementById("outstop");
+      var outval = document.getElementById("outval");
+      var outword = document.getElementById("outword");
+      var outdeep = document.getElementById("outdeep");
+      var outkeyword = document.getElementById("outkeyword");
+      var outtags = document.getElementById("tags");
+      var indesc = document.getElementById("indesc").value;
+      var intfx = document.getElementById("intfx").value;
+      var outkeyarray = new Array();
+      var outkeyarray1 = new Array();
+      var outkeystoparray = new Array();
+      var outwordarray = new Array();
+      var outtfxarray = new Array();
+      var outtfxarray1 = new Array();
+      outtit.firstChild.nodeValue = str;
+
+      for (i = 0; i < name.length; i++) {
+
+        if (key["stopkey"][i] == true) {
+          outkeyarray.push(key["name"][i]);
+          outtfxarray.push(key["tfx"][i]);
+        }
+
+      }
+      for (i = 0; i < outkeyarray.length; i++) {
+        for (j = outkeyarray.length; j > i; j--) {
+          if (outkeyarray[i] == outkeyarray[j]) {
+            outkeyarray = outkeyarray.slice(0, j).concat(outkeyarray.slice(j + 1, outkeyarray.length));
+            outtfxarray = outtfxarray.slice(0, j).concat(outtfxarray.slice(j + 1, outtfxarray.length));
+          }
+        }
+
+
+      }
+
+      outkey.firstChild.nodeValue = outkeyarray.join(",");
+      outtfx.firstChild.nodeValue = outtfxarray.join(",");
+      //
+      for (i = 0; i < name.length; i++) {
+
+        if (key["stopkey"][i] == false) {
+          outkeystoparray.push(key["name"][i]);
+        }
+      }
+      outstop.firstChild.nodeValue = outkeystoparray.join(",");
+      //
+
+      outval.firstChild.nodeValue = intfx;
+      //
+      for (i = 0; i < outkeyarray.length; i++) {
+
+        if (outtfxarray[i] > intfx) {
+          outwordarray.push(outkeyarray[i]);
+          outtfxarray1.push(outtfxarray[i])
+        }
+      }
+      outword.firstChild.nodeValue = outwordarray.join(",");
+      outdeep.firstChild.nodeValue = indesc;
+      for (i = 0; i < outwordarray.length; i++) {
+        var k, l;
+        for (j = i + 1; j < outwordarray.length; j++) {
+          if (outtfxarray1[i] < outtfxarray1[j]) {
+            k = outtfxarray1[i];
+            outtfxarray1[i] = outtfxarray1[j];
+            outtfxarray1[j] = k;
+            l = outwordarray[i];
+            outwordarray[i] = outwordarray[j];
+            outwordarray[j] = l;
+
+          }
+        }
+
+      }
+
+      outwordarray = outwordarray.slice(0, indesc)
+      outkeyword.firstChild.nodeValue = outwordarray.join(",");
+      outtags.value = outwordarray.join(",");
+    }
+  </script>
+</body>
+
+</html>
