@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>字典类</title>
+</head>
+
+<body>
+  <h1>字典类</h1>
+  <p>字典指键值存储的数据结构。可根据键查找对应的值。</p>
+  <script>
+    function Dictionary() {
+      this.add = add;
+      this.datastore = new Array();
+      this.find = find;
+      this.remove = remove;
+      this.showAll = showAll;
+      this.count = count;
+      this.clear = clear;
+    }
+
+    function add(key, value) { //增加数据
+      this.datastore[key] = value;
+    }
+
+    function find(key) { //查找
+      return this.datastore[key];
+    }
+
+    function remove(key) { //删除
+      delete this.datastore[key];
+    }
+
+    function showAll() { //显示所有数据
+      for (var key in this.datastore) {
+        if (this.datastore.hasOwnProperty(key)) {
+          console.log(key, ":", this.datastore[key]);
+        }
+      }
+    }
+
+    function count() { //字典中的数据计数
+      var n = 0;
+      for (var key in this.datastore) {
+        if (this.datastore.hasOwnProperty(key)) {
+          n++;
+        }
+      }
+      return n;
+    }
+
+    function clear() { //清空字典
+      for (var key in this.datastore) {
+        if (this.datastore.hasOwnProperty(key)) {
+          delete this.datastore[key];
+        }
+      }
+    }
+
+    var pbook = new Dictionary(); //电话号码本
+    pbook.add("Raymond", "1234567");
+    pbook.add("David", "345");
+    pbook.add("Cynthia", "456");
+    pbook.add("Mike", "723");
+    pbook.add("Jennifer", "987");
+    pbook.add("Danny", "012");
+    pbook.add("Jonathan", "666");
+    pbook.showAll();
+    console.log(pbook.count());
+    pbook.remove("Mike");
+    console.log(pbook.count());
+    pbook.clear();
+    console.log(pbook.count());
+    pbook.showAll();
+  </script>
+</body>
+
+</html>

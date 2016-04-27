@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>二叉树查找</title>
+</head>
+
+<body>
+  <h1>Todo:? 二叉树查找</h1>
+  <script type="text/javascript">
+    //二叉查找树之节点
+    function Node(data, left, right) {
+      this.data = data; //节点中的数据
+      this.left = left; //左节点
+      this.right = right; //右节点
+      this.show = show; //显示节点中的数据
+    }
+
+    function show() {
+      return this.data;
+    }
+
+    function BST() { //二叉查找树
+      this.root = null; //根节点
+      this.insert = insert; //插入数据
+      this.inOrder = inOrder; //中序遍历
+      this.preOrder = preOrder; //前序遍历
+      this.postOrder = postOrder; //后序遍历
+      this.getmin = getmin; //获取二叉查找树中的最小值
+      this.getmax = getmax; //获取二叉查找树中的最大值
+      this.find = find; //查找指定的数据
+      this.remove = remove;
+      this.removeNode = removeNode;
+      this.getSmallest = getSmallest;
+    }
+
+    function insert(data) {
+      var n = new Node(data, null, null);
+      if (this.root == null) {
+        this.root = n;
+      } else {
+        var current = this.root;
+        var parent;
+        while (true) {
+          parent = current;
+          if (data < current.data) {
+            current = current.left;
+            if (current == null) {
+              parent.left = n;
+              break;
+            }
+          } else {
+            current = current.right;
+            if (current == null) {
+              parent.right = n;
+              break;
+            }
+          }
+        }
+      }
+    }
+
+    function inOrder(node) {
+      if (!(node == null)) {
+        inOrder(node.left);
+        console.log(node.show() + " ");
+        inOrder(node.right);
+      }
+    }
+
+    function preOrder(node) {
+      if (!(node == null)) {
+        console.log(node.show() + " ");
+        preOrder(node.left);
+        preOrder(node.right);
+      }
+    }
+
+    function postOrder(node) {
+      if (!(node == null)) {
+        postOrder(node.left);
+        postOrder(node.right);
+        console.log(node.show() + " ");
+      }
+    }
+
+    function getmin() {
+      var current = this.root;
+      while (!(current.left == null)) {
+        current = current.left;
+      }
+      return current.data;
+    }
+
+    function getmax() {
+      var current = this.root;
+      while (!(current.right == null)) {
+        current = current.right;
+      }
+      return current.data;
+    }
+
+    function find(data) {
+      var current = this.root;
+      while (current.data != data) {
+        if (data < current.data) {
+          current = current.left;
+        } else {
+          current = current.right;
+        }
+        if (current == null) {
+          return null;
+        }
+      }
+      return current;
+    }
+
+    function getSmallest(node) { //找包含最小值的节点
+      if (node.left == null) {
+        return node;
+      } else {
+        return getSmallest(node.left);
+      }
+    }
+
+    function remove(data) { //删除数据
+      root = removeNode(this.root, data);
+    }
+
+    function removeNode(node, data) { // 在某节点中删除数据
+      if (node == null) {
+        return null;
+      }
+      if (data == node.data) {
+        // 节点node没有子节点
+        if (node.left == null && node.right == null) {
+          return null;
+        }
+        // 节点node没有左子节点
+        if (node.left == null) {
+          return node.right;
+        }
+        // 节点node没有右子节点
+        if (node.right == null) {
+          return node.left;
+        }
+        // 节点node有两个子节点
+        var tempNode = getSmallest(node.right); //在右节点中找最小值的节点
+        node.data = tempNode.data; //将最小值复制到待删除节点上
+        node.right = removeNode(node.right, tempNode.data); //在右节点删除这个临时节点
+        return node;
+      } else if (data < node.data) {
+        node.left = removeNode(node.left, data);
+        return node;
+      } else {
+        node.right = removeNode(node.right, data);
+        return node;
+      }
+    }
+    var nums = new BST();
+    nums.insert(23);
+    nums.insert(45);
+    nums.insert(16);
+    nums.insert(37);
+    nums.insert(3);
+    nums.insert(99);
+    nums.insert(22);
+    //中序遍历
+    inOrder(nums.root);
+    console.log("---------------------");
+    console.log("Preorder traversal: ");
+    preOrder(nums.root);
+    console.log("---------------------");
+    console.log("Postorder traversal: ");
+    postOrder(nums.root);
+    console.log("---------------------");
+    var min = nums.getmin();
+    console.log("The minimum value of the BST is: " + min);
+    var max = nums.getmax();
+    console.log("The maximum value of the BST is: " + max);
+    inOrder(nums.root);
+    console.log("---------------------");
+    var value = 37;
+    var found = nums.find(value);
+    if (found != null) {
+      console.log("Found " + value + " in the BST.");
+    } else {
+      console.log(value + " was not found in the BST.");
+    }
+    inOrder(nums.root);
+    console.log("---------------------");
+    nums.remove(37);
+    inOrder(nums.root);
+  </script>
+</body>
+
+</html>

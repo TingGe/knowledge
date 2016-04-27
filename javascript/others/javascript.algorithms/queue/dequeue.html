@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>优先队列</title>
+</head>
+
+<body>
+  <h1>优先队列</h1>
+  <p>一般情况，从队列中删除元素，一定是率先入队元素。但是从优先队列中删除元素时，需要考虑优先权
+    的限制。</p>
+  <p>比如医院急诊科（Emergency Department）的候诊室，就是采用优先队列的例子。当病人进入候诊
+    室时，分诊护士会评估患者病情的严重程度，然后给一个优先级代码。高优先级患者优先于低优先级的患
+    者就医，同优先级的患者按照先来先服务的顺序就医。</p>
+  <script type="text/javascript">
+    function Queue() {
+      this.dataStore = [];
+      this.enqueue = enqueue; //入队
+      this.dequeue = dequeue; //出队
+      this.front = front; //查看队首元素
+      this.back = back; //查看队尾元素
+      this.toString = toString;
+      this.empty = empty;
+      this.count = count;
+    }
+
+    function enqueue(element) {
+      this.dataStore.push(element);
+    }
+    /*
+ function dequeue(){
+    return this.dataStore.shift();
+ }
+*/
+    function front() {
+      return this.dataStore[0];
+    }
+
+    function back() {
+      return this.dataStore[this.dataStore.length - 1];
+    }
+
+    function toString() {
+      return this.dataStore.join();
+    }
+
+    function empty() {
+      if (this.dataStore.length == 0) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    function count() {
+      return this.dataStore.length;
+    }
+
+    function Patient(name, code) { //病人
+      this.name = name;
+      this.code = code; //一个整数，表示患者的优先级
+    }
+
+    function dequeue() { //出队
+      var priority = this.dataStore[0].code;
+      var k = 0;
+      for (var i = 1, len = this.dataStore.length; i < len; ++i) {
+        if (this.dataStore[i].code < priority) {
+          priority = this.dataStore[i].code;
+          k = i;
+        }
+      }
+
+      return this.dataStore.splice(k, 1)[0];
+    }
+
+
+    //优先队列测试
+    var queue = new Queue();
+    var p = new Patient("Smith", 5);
+    queue.enqueue(p);
+    queue.enqueue(new Patient("Jones", 4));
+    queue.enqueue(new Patient("Fehrenbach", 6));
+    queue.enqueue(new Patient("Brown", 1));
+    queue.enqueue(new Patient("Ingram", 1));
+    while (!queue.empty()) {
+      console.log(queue.dequeue().name);
+    }
+  </script>
+</body>
+
+</html>

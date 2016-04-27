@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>JS贪心算法：找零问题</title>
+</head>
+
+<body>
+  <script type="text/javascript">
+    // 一定要保持从大到小
+    var money = [100, 50, 20, 10, 5, 1, 0.5, 0.1];
+
+    /*
+     * m[]:存放可供找零的面值，降序排列
+     * n:需要找零数
+     */
+    function greedyMoney(m, n) {
+      document.write("求总额 " + n + ": <br>");
+      for (var i = 0; i < m.length; i++) {
+        while (n >= m[i] && n > 0) {
+          document.write(m[i] + " ");
+          n = n - m[i];
+        }
+      }
+      document.write("<br>");
+    }
+    document.write("面值" + money.join(',') + "<hr>");
+    greedyMoney(money, 323);
+    greedyMoney(money, 48);
+  </script>
+</body>
+
+</html>

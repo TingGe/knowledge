@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>取字符串中出现次数最多的字符</title>
+</head>
+
+<body>
+  <h1>利用散列表，统计字符串中出现次数最多的字符</h1>
+  <script>
+    //将字符串的字符保存在一个hash table中，key是字符，value是这个字符出现的次数
+    var str = "abcdefgaddda";
+    var obj = {};
+    for (var i = 0, l = str.length; i < l; i++) {
+      var key = str[i];
+      if (!obj[key]) {
+        obj[key] = 1;
+      } else {
+        obj[key]++;
+      }
+    }
+    /*遍历这个hash table，获取value最大的key和value*/
+    var max = -1;
+    var max_key = "";
+    var key;
+    for (key in obj) {
+      if (max < obj[key]) {
+        max = obj[key];
+        max_key = key;
+      }
+    }
+    document.write(str + "<br>");
+    document.write("出现次数最多字符: " + max_key + " 出现次数: " + max);
+  </script>
+</body>
+
+</html>

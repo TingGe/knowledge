@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>动态规划背包问题</title>
+</head>
+
+<body>
+  <h1>Todo:? 动态规划解背包问题</h1>
+  <p>如果保险箱中有5件物品，它们尺寸分别为 3、4、7、8、9，而它们价值分别是 4、5、10、11、13，且背包容积为16，那么恰当解决方案是拿第三件物品和第五件物品，它们总尺寸 16，总价值 23</p>
+
+  <script type="text/javascript">
+    // Todo: ?
+
+    function max(a, b) {
+      return (a > b) ? a : b;
+    }
+
+    function dKnapsack(capacity, size, value, n) {
+      var K = [];
+      for (var i = 0; i <= capacity + 1; i++) {
+        K[i] = []; //定义二维数组
+      }
+
+      for (var i = 0; i <= n; i++) { //n:物体数
+        for (var w = 0; w <= capacity; w++) { //w:背包容量
+          if (i == 0 || w == 0) {
+            K[i][w] = 0; //表示当物体为前面i个,背包容量为w的最大价值
+          } else if (size[i - 1] <= w) { //大小为size[i-1]的物品可以放入背包时
+            K[i][w] = max(value[i - 1] + K[i - 1][w - size[i - 1]], K[i - 1][w]);
+          } else {
+            K[i][w] = K[i - 1][w]; //大小为size[i-1]的物品不能放入背包时
+          }
+          document.write(K[i][w]);
+        }
+        document.write("<br>");
+      }
+
+      return K[n][capacity];
+    }
+    var value = [4, 5, 10, 11, 13];
+    var size = [3, 4, 7, 8, 9];
+    var capacity = 16;
+    var n = 5;
+    document.write(dKnapsack(capacity, size, value, n)); //显示23
+  </script>
+</body>
+
+</html>

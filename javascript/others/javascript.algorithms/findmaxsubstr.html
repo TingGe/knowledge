@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>求最长公共字符串</title>
+</head>
+
+<body>
+  <h1>求最长公共字符串</h1>
+  <p>求最大公共子串，常见的做法是使用矩阵。假设有字符串：abcdefg 和字符串 xyzadfbcd</p>
+  <script type="text/javascript">
+    function findMaxSubStr(s1, s2) {
+      var str = "",
+        L1 = s1.length,
+        L2 = s2.length;
+
+      if (L1 > L2) {
+        var s3 = s1;
+        s1 = s2;
+        s2 = s3;
+        s3 = null;
+        L1 = s2.length;
+        L2 = s1.length;
+      }
+
+      for (var i = L1; i > 0; i--) {
+        for (var j = 0; j <= L2 - i && j < L1; j++) {
+          str = s1.substr(j, i);
+          if (s2.indexOf(str) >= 0) {
+            return str;
+          }
+        }
+      }
+
+      return "";
+    }
+    var s1 = "abcdefg";
+    var s2 = "xyzadfbcd";
+    document.write(findMaxSubStr(s1, s2)); //显示abcd
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>双向链表</title>
+</head>
+
+<body>
+  <h1>Todo?双向链表</h1>
+  <script type="text/javascript">
+    // 一、 节点类
+
+    function Node(element) {
+      this.element = element;
+      this.next = null;
+      this.previous = null;
+    }
+
+    // 二、 双向链表类
+
+    function LList() {
+      this.head = new Node("head");
+      this.find = find;
+      this.insert = insert;
+      this.display = display;
+      this.remove = remove;
+      this.findLast = findLast;
+      this.dispReverse = dispReverse;
+    }
+
+    function find(item) { //查找数据为item的节点，从头节点开始找
+      var currNode = this.head;
+      while (currNode.element != item) {
+        currNode = currNode.next;
+      }
+      return currNode;
+    }
+
+    function findLast() { //找最后一个节点
+      var currNode = this.head;
+      while (!(currNode.next == null)) {
+        currNode = currNode.next;
+      }
+      return currNode;
+    }
+
+    function insert(newElement, item) { //在item后插入newElement
+      var newNode = new Node(newElement); //构造新节点
+      var current = this.find(item);
+      newNode.next = current.next;
+      newNode.previous = current;
+      current.next = newNode;
+    }
+
+    function display() {
+      var currNode = this.head;
+      while (!(currNode.next == null)) {
+        console.log(currNode.next.element);
+        currNode = currNode.next;
+      }
+    }
+
+    function remove(item) { //删除数据为item的节点
+      var currNode = this.find(item);
+      if (!(currNode.next == null)) {
+        currNode.previous.next = currNode.next;
+        currNode.next.previous = currNode.previous;
+        currNode.next = null;
+        currNode.previous = null;
+      } else {
+        currNode.previous.next = null;
+        currNode.next = null;
+        currNode.previous = null;
+      }
+    }
+
+    function dispReverse() { //反序显示双向链表中的元素
+      var currNode = this.head;
+      currNode = this.findLast();
+      while (!(currNode.previous == null)) {
+        console.log(currNode.element);
+        currNode = currNode.previous;
+      }
+    }
+
+    // 三、 测试：
+    var cities = new LList();
+    cities.insert("Conway", "head");
+    cities.insert("Russellville", "Conway");
+    cities.insert("Carlisle", "Russellville");
+    cities.insert("Alma", "Carlisle");
+    cities.display();
+    console.log();
+    cities.remove("Carlisle");
+    cities.display();
+    console.log();
+    cities.dispReverse();
+    console.log("--------");
+    cities.remove("Alma");
+    cities.display();
+  </script>
+</body>
+
+</html>

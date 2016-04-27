@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>利用栈实现十进制转其它进制</title>
+</head>
+
+<body>
+  <h1>利用栈实现十进制转其它进制</h1>
+  <p>将数字n转换为以b为基数的数字，实现转换算法如下：</p>
+  <ol>
+    <li>最高位为 n % b ,将此压入栈</li>
+    <li>使用 n/b 代替 n</li>
+    <li>重复步骤 1 和 2 ，直到 n 等于 0，且没有余数</li>
+    <li>持续将栈内元素弹出，直到栈为空，依次将这些元素排列，就得到转换后数字的字符串形式</li>
+  </ol>
+  <script type="text/javascript">
+    function Stack() { //利用数组实现栈
+      this.dataStore = [];
+      this.top = 0;
+      this.push = push;
+      this.pop = pop;
+      this.peek = peek;
+      this.clear = clear;
+      this.length = length;
+    }
+
+    function push(element) {
+      this.dataStore[this.top++] = element;
+    }
+
+    function peek() {
+      return this.dataStore[this.top - 1];
+    }
+
+    function pop() {
+      return this.dataStore[--this.top];
+    }
+
+    function clear() {
+      this.top = 0;
+    }
+
+    function length() {
+      return this.top;
+    }
+    //十进制转为二至九进制
+    function mulBase(num, base) {
+      var s = new Stack();
+      do {
+        s.push(num % base);
+        num = Math.floor(num /= base);
+      } while (num > 0);
+      var converted = "";
+      while (s.length() > 0) {
+        converted += s.pop();
+      }
+      return converted;
+    }
+    var num = 32;
+    var base = 2;
+    var numNum = mulBase(num, base);
+
+    console.log("十进制 " + num + " 转 " + base + " 进制值： " + numNum);
+    num = 125;
+    base = 8;
+    numNum = mulBase(num, base);
+    console.log("十进制 " + num + " 转 " + base + " 进制值： " + numNum);
+  </script>
+</body>
+
+</html>

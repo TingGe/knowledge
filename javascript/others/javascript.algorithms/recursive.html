@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>递归解法：背包问题</title>
+</head>
+
+<body>
+  <h1>递归解法解背包问题</h1>
+  <p>如果保险箱中有5件物品，它们尺寸分别为 3、4、7、8、9，而它们价值分别是 4、5、10、11、13，且背包容积为16，那么恰当解决方案是拿第三件物品和第五件物品，它们总尺寸 16，总价值 23</p>
+  <p>不足：效率不高</p>
+
+  <script type="text/javascript">
+    function max(a, b) {
+      return (a > b) ? a : b;
+    }
+
+    function knapsack(capacity, size, value, n) {
+      if (n == 0 || capacity == 0) {
+        return 0;
+      }
+      if (size[n - 1] > capacity) {
+        return knapsack(capacity, size, value, n - 1);
+      } else {
+        return max(value[n - 1] + knapsack(capacity - size[n - 1], size, value, n - 1),
+          knapsack(capacity, size, value, n - 1));
+      }
+    }
+    var value = [4, 5, 10, 11, 13];
+    var size = [3, 4, 7, 8, 9];
+    var capacity = 16;
+    var n = 5;
+    document.write(knapsack(capacity, size, value, n)); //显示23
+  </script>
+</body>
+
+</html>
