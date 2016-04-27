@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>栈</title>
+  <script src="./stack.js" charset="utf-8"></script>
+</head>
+
+<body>
+  <h1>判断是否回文</h1>
+  <script type="text/javascript">
+    // 回文判断
+    function isPalindrome(word) {
+      var s = new Stack();
+      for (var i = 0; i < word.length; ++i) {
+        s.push(word[i]);
+      }
+      var rword = "";
+      while (s.length() > 0) {
+        rword += s.pop();
+      }
+      if (word == rword) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+    var word = "hello";
+    document.write(word + " 是否回文 " + isPalindrome(word) + "<br>");
+    var word = "racecar";
+    document.write(word + " 是否回文 " + isPalindrome(word) + "<br>");
+    document.write("<hr>");
+  </script>
+
+  <h1>十进制转其它进制</h1>
+  <p>将数字n转换为以b为基数的数字，实现转换算法如下：</p>
+  <ol>
+    <li>最高位为 n % b ,将此压入栈</li>
+    <li>使用 n/b 代替 n</li>
+    <li>重复步骤 1 和 2 ，直到 n 等于 0，且没有余数</li>
+    <li>持续将栈内元素弹出，直到栈为空，依次将这些元素排列，就得到转换后数字的字符串形式</li>
+  </ol>
+  <script type="text/javascript">
+    //十进制转为二至九进制
+    function mulBase(num, base) {
+      var s = new Stack();
+      do {
+        s.push(num % base);
+        num = Math.floor(num /= base);
+      } while (num > 0);
+      var converted = "";
+      while (s.length() > 0) {
+        converted += s.pop();
+      }
+      return converted;
+    }
+    var num = 32;
+    var base = 2;
+    var numNum = mulBase(num, base);
+
+    document.write("十进制 " + num + " 转 " + base + " 进制值： " + numNum + "<br>");
+    num = 125;
+    base = 8;
+    numNum = mulBase(num, base);
+    document.write("十进制 " + num + " 转 " + base + " 进制值： " + numNum + "<br>");
+    document.write("<hr>");
+  </script>
+  <h1>阶乘算法</h1>
+  <p>5! = 5 * 4 * 3 * 2 * 1 = 120</p>
+  <script type="text/javascript">
+    function fact(n) {
+      var s = new Stack()
+      while (n > 1) {
+        //[5,4,3,2]
+        s.push(n--);
+      }
+      var product = 1;
+      while (s.length() > 0) {
+        product *= s.pop();
+      }
+      return product;
+    }
+    document.write("5! = " + fact(5));
+  </script>
+</body>
+
+</html>
