@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>分治法</title>
+</head>
+
+<body>
+  <h1>分治法</h1>
+  <h2>分治法的适用条件</h2>
+  <p>分治法所能解决的问题一般具有以下几个特征：</p>
+  <p>
+    <ol>
+      <li>该问题的规模缩小到一定的程度就可以容易地解决；</li>
+      <li>该问题可以分解为若干个规模较小的相同问题，即该问题具有最优子结构性质；</li>
+      <li>利用该问题分解出的子问题的解可以合并为该问题的解；</li>
+      <li>该问题所分解出的各个子问题是相互独立的，即子问题之间不包含公共的子子问题。</li>
+    </ol>
+  </p>
+  <p>第三条特征是关键，能否利用分治法完全取决于问题是否具有第三条特征，如果具备了第一条和第二条特征，而不具备第三条特征，则可以考虑贪心法或动态规划法。第四条特征涉及到分治法的效率，如果各子问题是不独立的，则分治法要做许多不必要的工作，重复地解公共的子问题，此时虽然可用分治法，但一般用动态规划法较好。</p>
+  <h2>分治法的基本步骤</h2>
+  <p>分治法在每一层递归上都有三个步骤：</p>
+  <p>
+    <ol>
+      <li>分解：将原问题分解为若干个规模较小，相互独立，与原问题形式相同的子问题</li>
+      <li>解决：若子问题规模较小而容易被解决则直接解，否则递归地解各个子问题</li>
+      <li>合并：将各个子问题的解合并为原问题的解</li>
+    </ol>
+  </p>
+  <p>从大量实践中发现，在用分治法设计算法时，最好使子问题的规模大致相同。</p>
+  <h2>例：二分搜索</h2>
+  <p>
+    示例：从 [1, 2, 3, 4, 5, 6, 7] 中查找 4，搜索的起、止索引范围是0, 6，如果找到，返回下标，否则返回-1。
+  </p>
+  <script type="text/javascript">
+    //打印输出(调试用)
+    function println(msg) {
+      document.write("下标是：" + msg + "<br>");
+    }
+
+    //数组中i,j位置的元素交换(辅助函数)
+    function swap(A, i, j) {
+      var t = A[i];
+      A[i] = A[j];
+      A[j] = t;
+    }
+
+    //输入：A为已按非降序排列的数组
+    //x 为要搜索的值
+    //low,high搜索的起、止索引范围
+    //返回：如果找到，返回下标，否则返回-1
+    function binarySearchDiv(A, x, low, high) {
+      if (low > high) {
+        return -1;
+      }
+      var mid = Math.floor((low + high) / 2);
+      if (x == A[mid]) {
+        return mid;
+      } else if (x < A[mid]) {
+        return binarySearchDiv(A, x, low, mid - 1);
+      } else {
+        return binarySearchDiv(A, x, mid + 1, high);
+      }
+    }
+
+    var f = binarySearchDiv([1, 2, 3, 4, 5, 6, 7], 4, 0, 6);
+    println(f); //3
+  </script>
+  <h2>例：寻找数组A中的最大、最小值</h2>
+  <p>
+    示例：从 [1, 2, 3, 4, 5, 6, 7, 8] 中查找最小和最大值，搜索的起、止索引范围是0, 7。
+  </p>
+  <script type="text/javascript">
+    //寻找数组A中的最大、最小值(分治法实现)
+    function findMinMaxDiv(A, low, high) {
+      //最小规模子问题的解
+      if (high - low == 1) {
+        if (A[low] < A[high]) {
+          return [A[low], A[high]];
+        } else {
+          return [A[high], A[low]];
+        }
+      }
+
+      var mid = Math.floor((low + high) / 2);
+      //在前一半元素中寻找子问题的解
+      var r1 = findMinMaxDiv(A, low, mid);
+      //在后一半元素中寻找子问题的解
+      var r2 = findMinMaxDiv(A, mid + 1, high);
+      //把二部分的解合并
+      var x = r1[0] > r2[0] ? r2[0] : r1[0];
+      var y = r1[1] > r2[1] ? r1[1] : r2[1];
+      return [x, y];
+    }
+    var r = findMinMaxDiv([1, 2, 3, 4, 5, 6, 7, 8], 0, 7);
+    println(r); //1,8
+  </script>
+</body>
+
+</html>
