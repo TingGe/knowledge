@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>输出螺旋矩形算法</title>
+</head>
+
+<body>
+  <h1>Todo？螺旋矩形算法</h1>
+  <div id="container"></div>
+  <script type="text/javascript">
+    var cal = function(len) {
+      var helix = [
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        []
+      ];
+      var min = 0;
+      var max = len - 1;
+      var row = 0;
+      var col = 0;
+      for (var i = 0; i < len * len; i++) {
+        helix[row][col] = i + 1;
+        if (row == min && col < max) {
+          col = col + 1;
+        } else if (row < max && col == max) {
+          row = row + 1;
+        } else if (row == max && col > min) {
+          col = col - 1;
+        } else if (row > min && col == min) {
+          row = row - 1;
+        }
+        if (row - 1 == min && col == min) {
+          min = min + 1;
+          max = max - 1;
+        }
+      }
+      return helix;
+    };
+    var helix = cal(9);
+    var html = '';
+    for (var i = 0; i < helix.length; i++) {
+      for (var j = 0; j < helix[i].length; j++) {
+        if (helix[i][j] < 10) {
+          helix[i][j] = "0" + helix[i][j];
+        }
+        html += helix[i][j] + ' ';
+      }
+      html += '<br>';
+    }
+    var container = document.getElementById("container");
+    container.innerHTML = html;
+  </script>
+
+</body>
+
+</html>

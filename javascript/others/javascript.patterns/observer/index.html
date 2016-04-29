@@ -1,0 +1,57 @@
+<!-- 设计模式：观察者模式 - -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>观察者模式</title>
+  <script src="./observer.js" charset="utf-8"></script>
+</head>
+
+<body>
+  <script>
+    var paper = {
+      daily: function() {
+        this.publish("big news today");
+      },
+      monthly: function() {
+        this.publish("interesting analysis", "monthly");
+      }
+    };
+
+    makePublisher(paper);
+
+    var joe = {
+      drinkCoffee: function(paper) {
+        document.write('Just read ' + paper + '<br>');
+      },
+      sundayPreNap: function(monthly) {
+        document.write('About to fall asleep reading this ' + monthly + '<br>');
+      }
+    };
+
+    paper.subscribe(joe.drinkCoffee);
+    paper.subscribe(joe.sundayPreNap, 'monthly');
+
+    paper.daily();
+    paper.daily();
+    paper.daily();
+    paper.monthly();
+
+    makePublisher(joe);
+
+    joe.tweet = function(msg) {
+      this.publish(msg);
+    };
+
+    paper.readTweets = function(tweet) {
+      document.write('Call big meeting! Someone ' + tweet + '<br>');
+    };
+
+    joe.subscribe(paper.readTweets);
+
+    joe.tweet("hated the paper today");
+  </script>
+</body>
+
+</html>

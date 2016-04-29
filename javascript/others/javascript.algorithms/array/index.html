@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>随机打乱一个一维数组</title>
+</head>
+
+<body>
+  <script type="text/javascript">
+    // 方法一
+    var arr = [];
+    for (var i = 0; i < 10; i++) {
+      arr[i] = i;
+    }
+
+    arr.sort(function() {
+      return 0.5 - Math.random()
+    })
+    var str = arr.join();
+    document.write(str + "<br>");
+
+    //方法二
+    function shuffle(arr) {
+      var len = arr.length;
+      for (var i = 0; i < len; i++) {
+        var j = Math.floor(Math.random() * len);
+        var temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+      }
+    }
+    shuffle(arr);
+    str = arr.join();
+    document.write(str + "<br>");
+  </script>
+</body>
+
+</html>

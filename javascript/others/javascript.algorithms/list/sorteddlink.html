@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>已排序的双向链表</title>
+</head>
+
+<body>
+  <h1>Todo? 已排序的双向链表</h1>
+  <script type="text/javascript">
+    /**
+     * Base data structure基本的数据结构
+     * Used by Astar algorithm implement - AstarPath 用于A*算法
+     *
+     * sorted double link list//已排序的双向链表
+     * Function: add data object, and specail the sorted key field
+     * SortedDlink will maintain a SortedKeyField increaing list
+     *
+     * by: lilong'en(lilongen@gmail.com)
+     *
+     */
+    //节点类
+    linkItem = function(nodeIdx, value) {
+      this.nodeIdx = nodeIdx; //节点的索引/查询关键字
+      this.value = value;
+      this.next = null;
+      this.before = null;
+    };
+    //已排序的双向链表
+    SortedDlink = function() {};
+    SortedDlink.prototype = {
+      _head: null, //头节点
+      _length: 0, //链表节点个数
+      _hashIdx: {}, //用于查询的节点索引集
+
+      add: function(nodeIdx, value) { //链表中添加一节点
+        var newItem = new linkItem(nodeIdx, value);
+        this._hashIdx[newItem.nodeIdx + ''] = 1; //标记链表中已存在此节点
+        if (!this._head) { //还没有头节点
+          this._head = newItem;
+          this._head.next = this._head;
+          this._head.before = this._head;
+          this._length++;
+          return;
+        }
+
+        var linkPoint = this._head; //指针指向头节点
+        //clockwise fetching, large --> small// 顺时针方向读取,由大到小
+        while (true) {
+          if (newItem.value >= linkPoint.value) { //大于指针的值，插入到指针前
+
+            currBefore = linkPoint.before;
+            currBefore.next = newItem;
+            newItem.before = currBefore;
+            newItem.next = linkPoint;
+            linkPoint.before = newItem;
+
+            if (linkPoint == this._head) {
+              this._head = newItem; //更改新的头指针，指向newItem
+            }
+            this._length++;
+            return;
+          }
+
+          linkPoint = linkPoint.next; //指针后移
+          if (linkPoint == this._head) {
+            break;
+          }
+        }
+
+
+        //anti-clockwise fetching, small --> large//逆时钟方向读取，由小到大
+        linkPoint = this._head.before; //指针指向头的前一节点
+        while (true) {
+          if (newItem.value < linkPoint.value) {
+            currNext = linkPoint.next;
+            currNext.before = newItem;
+            linkPoint.next = newItem;
+            newItem.next = currNext;
+            newItem.before = linkPoint;
+            this._length++;
+
+            return;
+          }
+
+          linkPoint = linkPoint.before;
+          if (linkPoint == this._head) {
+            break;
+          }
+        }
+      },
+      popup: function() { //弹出一节点
+        var last = this._head.before;
+        this._hashIdx[last.nodeIdx + ''] = 0; //在链表中标记为不存在
+
+        var lastBefore = last.before;
+        lastBefore.next = this._head;
+        this._head.before = lastBefore;
+        this._length--; //节点数减1
+
+        if (this._length == 0) {
+          this._head = null;
+        }
+
+        return last;
+      },
+
+      contain: function(key) { //是否包含某节点
+        return this._hashIdx[key]; //返回0或1
+      },
+
+      clear: function() { //清空链表
+        while (this._length) {
+          var before = this._head.before;
+          var beforeBefore = before.before;
+          this._head.before = beforeBefore;
+          beforeBefore.next = this._head;
+          delete before;
+          this._length--;
+        }
+
+        for (var strIdx in this._hashIdx) {
+          delete this._hashIdx[strIdx];
+        }
+        this._head = null;
+      },
+
+      length: function() {
+        return this._length;
+      }
+    };
+    //使用例子：
+    var linklist = new SortedDlink(); //实例化一个链表
+    linklist.add("2", 2); //添加节点
+    linklist.add("9", 9);
+    linklist.add("6", 6);
+    linklist.add("11", 11);
+    linklist.add("5", 5);
+    console.log(linklist.contain("11"));
+    console.log(linklist.popup().value);
+    console.log(linklist.popup().value);
+    console.log(linklist.contain("2"));
+  </script>
+</body>
+
+</html>
