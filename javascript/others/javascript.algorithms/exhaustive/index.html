@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>穷举法</title>
+</head>
+
+<body>
+  <h1>鸡兔同笼</h1>
+  <p>有鸡兔共50头，共有脚120只，问：鸡兔分别的数量？</p>
+  <script type="text/javascript">
+    var head = 50; //鸡兔总数
+    var foot = 120; //脚
+    var x; //鸡的数目
+    var y;
+    for (x = 0; x <= head; x++) {
+      y = 50 - x;
+      if (x * 2 + y * 4 == foot) {
+        document.write("鸡：" + x + "兔子：" + y + "<br>");
+      }
+    }
+  </script>
+  <h1>韩信点兵</h1>
+  <P>韩信知道部队人数大约为1000人左右，具体数字不详，5人一组，还剩1个人，7人一组，还剩2个人，8人一组，还剩3个人。 问：这支部队到底有多少人？
+  </P>
+  <script type="text/javascript">
+    var num = 1000; //最低值
+    var num2 = 2000; //假设值
+    var x;
+    for (x = num; x <= num2; x++) {
+      if (x % 5 == 1 && x % 7 == 2 && x % 8 == 3) {
+        document.write("这只部队可能有" + x + "人<br>");
+      }
+    }
+  </script>
+</body>
+
+</html>

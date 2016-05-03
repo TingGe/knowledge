@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>普通方式显示快速排序过程</title>
+</head>
+
+<body>
+  <div style="margin:0 auto;width:900px;">
+    <canvas id="myCanvas" width="900" height="600">
+      Your browser dosen't support the canvas element.
+    </canvas>
+  </div>
+  <script type="text/javascript">
+    (function(window) {
+      var canvas = document.getElementById("myCanvas");
+      var ctx = canvas.getContext('2d');
+      var height = canvas.height;
+      var width = canvas.width;
+
+      function getRandomNumber() {
+        var result = parseInt(Math.random() * height);
+        return result;
+      }
+      var lines = [];
+      ctx.clearRect(0, 0, width, height);
+      ctx.fillStyle = "#000000";
+      ctx.fillRect(0, 0, width, height);
+      ctx.lineWidth = 4;
+      ctx.strokeStyle = "#999999";
+      ctx.beginPath();
+      for (var i = 1; i <= width; i += 9) {
+        var tempHeight = getRandomNumber();
+        //console.log("i: " + i + "height: " + height + "tempHeight: " + tempHeight) ;
+        ctx.moveTo(i, height);
+        ctx.lineTo(i, height - tempHeight);
+        var line = {
+          y: height - tempHeight,
+          height: tempHeight
+        }
+        lines.push(line);
+      }
+      ctx.stroke();
+
+      function repaint() {
+        ctx.fillRect(0, 0, width, height);
+        ctx.beginPath();
+        var x = 1;
+        for (var k = 1; k < lines.length; k++) {
+          ctx.moveTo(x, height);
+          ctx.lineTo(x, lines[k].y);
+          x = x + 9;
+        }
+        ctx.stroke();
+        console.log("repaint");
+      }
+
+      function partition(array, low, high) {
+        var pivot;
+        var i;
+        var last_small;
+        var temp;
+        temp = array[low];
+        array[low] = array[parseInt((low + high) / 2)];
+        array[parseInt((low + high) / 2)] = temp;
+        pivot = array[low].height;
+        last_small = low;
+        for (var i = low + 1; i <= high; i++) {
+          if (array[i].height < pivot) {
+            last_small = last_small + 1;
+            temp = array[last_small];
+            array[last_small] = array[i];
+            array[i] = temp;
+          }
+        }
+        temp = array[last_small];
+        array[last_small] = array[low];
+        array[low] = temp;
+        repaint();
+        return last_small;
+      }
+      this.quickSort = function(src, low, high) {
+        var pivot_position;
+        if (low < high) {
+          pivot_position = partition(src, low, high)
+          setTimeout(_quickSort(src, low, pivot_position - 1), 150);
+          setTimeout(_quickSort(src, pivot_position + 1, high), 150);
+        }
+      };
+
+      function _quickSort(src, low, high) {
+        return function() {
+          quickSort(src, low, high);
+        }
+      }
+      setTimeout(_quickSort(lines, 0, lines.length - 1), 500);
+    })(window);
+  </script>
+</body>
+
+</html>

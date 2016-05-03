@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>二叉树的深度/广度优先搜索</title>
+</head>
+
+<body>
+  <script type="text/javascript">
+    var t = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19];
+    document.write('原始队列：<br>');
+    document.write(t);
+
+    //下面这段深度优先搜索
+    var deepView = function(aTree, iNode) {
+      (iNode in aTree) && (document.write(aTree[iNode] + ", "),
+        arguments.callee(aTree, 2 * iNode + 1), arguments.callee(aTree, 2 * iNode + 2))
+    }
+
+    //广度优先
+    /** 广搜遍历*/
+    function wideView(tree) {
+      queue = [];
+      var i = 0;
+      queue.unshift(tree[i]);
+      while (queue.length > 0) {
+        var temp = queue.pop(); //出队列
+        document.write(temp + ", ");
+
+        if ((2 * i + 2) <= tree.length) {
+          if (tree[2 * i + 1]) {
+            queue.unshift(tree[2 * i + 1]); //进队列
+          }
+          if ((2 * i + 2) < tree.length && tree[2 * i + 2]) {
+            queue.unshift(tree[2 * i + 2]);
+          }
+          i++;
+        }
+      }
+    }
+
+    document.write('<br>二叉树 深度优先：<br>');
+    //深度优先
+    deepView(t, 0);
+
+    document.write('<br>二叉树 广度优先：<br>');
+    //广度优先
+    wideView(t, 0);
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>“剪枝”</title>
+</head>
+
+<body>
+  <h1>找钱</h1>
+  <p>有5元、2元、1元、5角，要找8元钱。求所有解决方案</p>
+  <script type="text/javascript">
+    //初始化，由于其中涉及到浮点运算，所以每位*10
+    var total = 80; //80角
+    var _50 = 50;
+    var _20 = 20;
+    var _10 = 10;
+    var _5 = 5;
+    //50角，最少0张 最多80/50
+    for (var a = 0; a <= total / _50; a++) {
+      for (var b = 0; b <= total / _20; b++) {
+        //枝剪二：过滤非法情况，有可能ab取得过大的值，如果这个名额< 0，就没有名额给下面分配了
+        if ((total - a * 50) < 0) break;
+        for (var c = 0; c <= total / _10; c++) {
+
+          //枝剪三
+          if ((total - (a * _50 + b * _20 + c * _10)) < 0) break;
+
+          //前面的几种零钞，一共用掉了多少名额，剩下算出d
+          var d = (total - (a * _50 + b * _20 + c * _10)) / _5;
+          //枝剪一：d值根本不用算，因为可以用abc来求出
+          if (a * _50 + b * _20 + c * _10 + d * _5 == total)
+            document.write("5元=" + a + ",2元=" + b + ",1元=" + c + ",5角=" + d + "< br>");
+
+        }
+      }
+    }
+  </script>
+  <h1>求特证数</h1>
+  <p>求n位数的平方的尾数还是自己。例如：0^2=0 1^2=1 5^2=25</p>
+  <script>
+    var max = 10; //求个位，10 十位100 以此类推
+    var min = 0;
+    for (var i = min; i < max; i++) {
+      var n = i * i; //平方后
+      var m = i % 10; //取个位
+      //枝剪 不以0156结尾的必然是不满足要求的
+      if (m != 0 && m != 1 && m != 5 && m != 6)
+        continue;
+      if (n % max == i)
+        document.write(i + "," + n + "<br>");
+    }
+  </script>
+</body>
+
+</html>

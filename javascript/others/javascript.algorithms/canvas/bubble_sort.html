@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>普通方式显示冒泡排序过程</title>
+</head>
+
+<body>
+  <div style="margin:0 auto;width:900px;">
+    <canvas id="myCanvas" width="900" height="600">Your browser dosen't support the canvas element.</canvas>
+  </div>
+  <script type="text/javascript">
+    (function(window) {
+      var canvas = document.getElementById("myCanvas");
+      var ctx = canvas.getContext('2d');
+      var height = canvas.height;
+      var width = canvas.width;
+
+      function getRandomNumber() {
+        var result = parseInt(Math.random() * height);
+        return result;
+      }
+      var lines = [];
+      ctx.clearRect(0, 0, width, height);
+      ctx.fillStyle = "#000000";
+      ctx.fillRect(0, 0, width, height);
+      ctx.lineWidth = 4;
+      ctx.strokeStyle = "#999999";
+      ctx.beginPath();
+      for (var i = 1; i <= width; i += 9) {
+        var tempHeight = getRandomNumber();
+        //console.log("i: " + i + "height: " + height + "tempHeight: " + tempHeight) ;
+        ctx.moveTo(i, height);
+        ctx.lineTo(i, height - tempHeight);
+        var line = {
+          y: height - tempHeight,
+          height: tempHeight
+        }
+        lines.push(line);
+      }
+      ctx.stroke();
+
+      function repaint() {
+        ctx.fillRect(0, 0, width, height);
+        ctx.beginPath();
+        var x = 1;
+        for (var k = 1; k < lines.length; k++) {
+          ctx.moveTo(x, height);
+          ctx.lineTo(x, lines[k].y);
+          x = x + 9;
+        }
+        ctx.stroke();
+        console.log("repaint");
+      }
+      var i = 1;
+      var j = 0;
+      var N = lines.length;
+      setTimeout(function() {
+        if (lines[j].height > lines[j + 1].height) {
+          var temp = lines[j];
+          lines[j] = lines[j + 1];
+          lines[j + 1] = temp;
+          repaint();
+        }
+        j++;
+        if (j == N - i) {
+          i++;
+          j = 0;
+        }
+        if (i <= N - 1) {
+          setTimeout(arguments.callee, 50);
+        } else {
+          var text = "";
+          for (var l = 0; l < lines.length; l++) {
+            text = text + lines[l].height + " ";
+          }
+          console.log(text);
+        }
+      }, 50);
+    })(window);
+  </script>
+</body>
+
+</html>

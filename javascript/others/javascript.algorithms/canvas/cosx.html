@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>HTML5实时绘制黄金分割搜索求y=cosx的最大值</title>
+</head>
+
+<body>
+  <h1>HTML5实时绘制黄金分割搜索求y=cosx的最大值</h1>
+  <p>用黄金分割搜索算法求cos(x),x∈[-π/2,π/2]的最大值，设计出具体的程序，使之能够动态演示搜索过程。</p>
+  <canvas id="myCanvas" width="1000" height="550">
+    很抱歉，您的浏览器不支持html5画布功能，所以不能正常显示。亲，还是请换个浏览器试试吧。
+  </canvas>
+  <script type="text/javascript">
+    var c = document.getElementById("myCanvas");
+    var pen = c.getContext("2d");
+    var sx = 500,
+      sy = 275;
+    pen.strokeStyle = "Black";
+    pen.lineWidth = 2;
+    //绘制x轴
+    pen.moveTo(sx - 400, sy);
+    pen.lineTo(sx + 400, sy); //x轴
+    pen.moveTo(sx + 400, sy);
+    pen.lineTo(sx + 400 - 10, sy - 10); //x轴小箭头
+    pen.moveTo(sx + 400, sy);
+    pen.lineTo(sx + 400 - 10, sy + 10); //x轴小箭头
+    //绘制y轴
+    pen.moveTo(sx, sy - 250);
+    pen.lineTo(sx, sy + 250); //y轴
+    pen.moveTo(sx, sy - 250);
+    pen.lineTo(sx - 10, sy - 250 + 10); //y轴小箭头
+    pen.moveTo(sx, sy - 250);
+    pen.lineTo(sx + 10, sy - 250 + 10); //y轴小箭头
+    pen.stroke();
+    //绘制y=cosx  x[-pi/2,pi/2]
+    pen.beginPath();
+    pen.strokeStyle = "Green";
+    pen.moveTo(sx - Math.PI * 50, sy);
+    for (var i = -50; i <= 50; i++) {
+      pen.lineTo(sx + Math.PI * i, sy - Math.cos(i / 100.0 * Math.PI) * 100);
+    }
+    pen.stroke();
+
+    //绘制黄金分割搜索过程
+    pen.strokeStyle = "Red";
+    var l = -Math.PI / 2.0,
+      r = Math.PI / 2.0,
+      gold = (Math.sqrt(5) - 1.0) / 2.0;
+    var x1 = l + (r - l) * (1.0 - gold);
+    var x2 = l + (r - l) * gold;
+    var f1 = Math.cos(x1);
+    var f2 = Math.cos(x2);
+
+    function f() {
+      pen.beginPath();
+      pen.moveTo(sx + l * 100, sy - Math.cos(l) * 100);
+      pen.lineTo(sx + l * 100, sy);
+      pen.moveTo(sx + r * 100, sy - Math.cos(r) * 100);
+      pen.lineTo(sx + r * 100, sy);
+      pen.stroke();
+      if (r - l > 1e-5) {
+        if (f2 > f1) {
+          l = x1;
+          x1 = x2;
+          f1 = f2;
+          x2 = l + (r - l) * gold;
+          f2 = Math.cos(x2);
+        } else {
+          r = x2;
+          x2 = x1;
+          f2 = f1;
+          x1 = l + (r - l) * (1 - gold);
+          f1 = Math.cos(x1);
+        }
+        if (r - l > 1e-2) setTimeout("f()", 1000);
+        else setTimeout("f()", 100);
+      } else {
+        var ans = (l + r) / 2.0;
+        pen.font = "italic 14px serif";
+        pen.fillText(ans, sx - 20, sy + 15);
+      }
+    }
+    setTimeout("f()", 1000);
+  </script>
+
+</body>
+
+</html>
