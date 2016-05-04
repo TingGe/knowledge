@@ -10,4 +10,4 @@ function iterFib(n) {
   return result;
 }
 
-document.write("迭代法（执行效率同动态规划）" + iterFib(10)); //将显示55
+document.write("迭代法（执行效率同动态规划）" + iterFib(10) + "<br>"); //将显示55
