@@ -13,3 +13,6 @@
 |                 |                                          |      |
 |                 |                                          |      |
 
+## 知识点
+
+![](./asset/js_array_iteration.jpg)
