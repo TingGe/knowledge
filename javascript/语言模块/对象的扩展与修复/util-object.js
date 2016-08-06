@@ -12,3 +12,17 @@ if (typeof Object.create === "undefined") {
     return new F();
   };
 }
+
+/*
+ * 深层拷贝
+ */
+
+var deepCopy = function(obj) {
+  var newobj = {};
+  if (window.JSON) {
+    newobj = JSON.parse(JSON.stringify(obj));
+  } else if (typeof Object.create === "function") {
+    newobj = new Objec.create(obj)
+  }
+  return newobj;
+}

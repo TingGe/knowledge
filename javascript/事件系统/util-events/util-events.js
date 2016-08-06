@@ -1,3 +1,8 @@
+/*
+* 事件类 sea， 实现 on,off,emit
+* Todo: once
+*/
+
 (function (global) {
 	var seajs = global.seajs = {
 		// The current version of Sea.js being used
