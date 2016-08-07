@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>HTML5 Demo</title>
+  <style>
+    body {
+      display: flex;
+      width: 100%;
+      height: 500px;
+    }
+
+    .left {
+      width: 200px;
+      background: #f00
+    }
+
+    .middle {
+      flex: 1;
+      background-color: #00f
+    }
+
+    .right {
+      width: 100px;
+      background-color: #ff0
+    }
+
+    .triangle {
+      width: 0;
+      height: 0;
+      border-width: 60px 60px 0 ;
+      border-style: solid;
+      border-color: #ccc transparent transparent;
+      /*透明 透明  灰*/
+      margin: 40px auto;
+      position: relative;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="left">Flex 多列布局</div>
+  <div class="middle">
+    border 三角形
+    <div class="triangle"></div>
+  </div>
+  <div class="right">fsfdfs</div>
+</body>
+
+</html>
