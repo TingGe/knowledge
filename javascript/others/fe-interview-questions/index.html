@@ -8,7 +8,14 @@
     body {
       display: flex;
       width: 100%;
-      height: 500px;
+      height: 100vh;
+      margin: 0;
+      padding: 0
+    }
+
+    output {
+      width: 100px;
+      height:20px
     }
 
     .left {
@@ -22,30 +29,35 @@
     }
 
     .right {
-      width: 100px;
+      width: 300px;
       background-color: #ff0
     }
 
     .triangle {
       width: 0;
       height: 0;
-      border-width: 60px 60px 0 ;
+      border-width: 60px;
       border-style: solid;
-      border-color: #ccc transparent transparent;
-      /*透明 透明  灰*/
-      margin: 40px auto;
-      position: relative;
+      border-color: transparent transparent red transparent;
     }
   </style>
 </head>
 
 <body>
-  <div class="left">Flex 多列布局</div>
+  <div class="left">
+    Flex 多列布局
+  </div>
   <div class="middle">
+    <form action="/" oninput="result.value=range.value + color.value">
+      <input type="range" id="range" value="50">100
+      <input type="color" id="color">
+      <output name="result"></output>
+    </form>
+  </div>
+  <div class="right">
     border 三角形
     <div class="triangle"></div>
   </div>
-  <div class="right">fsfdfs</div>
 </body>
 
 </html>
