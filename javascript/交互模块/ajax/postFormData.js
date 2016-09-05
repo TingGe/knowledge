@@ -13,7 +13,7 @@ var sendByFormData = function(url, id, callback) {
   var win = window,
     form = document.getElementById(id),
     formData = new FormData(form),
-    Request, ex, request, ;
+    Request, ex, request;
   try {
     Request = win.XMLHttpRequest;
     if (Request) {
@@ -21,6 +21,9 @@ var sendByFormData = function(url, id, callback) {
       if ("withCredentials" in Request) {
         request = Request;
         request.open("POST", url, true);
+        // multipart/form-data 与 x-www-form-urlencoded 区别:
+        // multipart/form-data：既可以上传文件等二进制数据，也可以上传表单键值对，只是最后会转化为一条信息；
+        // x-www-form-urlencoded：只能上传键值对，并且键值对都是间隔分开的。
         request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         request.setRequestHeader('X-Request-With', null);
         request.withCredentials = "yes";
