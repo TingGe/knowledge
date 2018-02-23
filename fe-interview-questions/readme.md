@@ -28,3 +28,5 @@
 
 1. [markyun 前端开发面试题](https://github.com/markyun/My-blog/tree/master/Front-end-Developer-Questions/Questions-and-Answers)
 2. [软件工程技术面试个人指南](https://github.com/kdn251/interviews/blob/master/README-zh-cn.md)
+3. [8 React Interview Questions for 2018](https://blog.risingstack.com/8-react-interview-questions-for-2018/)
+4. [React Interview Questions](https://github.com/Pau1fitz/react-interview)
