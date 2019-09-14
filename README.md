@@ -30,4 +30,5 @@
 
 ## 参考
 
+- [ThoughtWorks洞见](https://www.thoughtworks.com/cn/radar/techniques)
 - [ThoughtWorks黄峰达：利用横向扩展方式，快速学习前端新框架](http://www.csdn.net/article/2015-07-16/2825225-ThoughtWorks-phodal)
